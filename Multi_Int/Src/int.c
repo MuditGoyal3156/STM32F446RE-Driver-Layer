@@ -31,8 +31,7 @@ uint32_t* SYSCFG_EXTICR3 = (uint32_t*) ( SYSCFG_BASEADDR + 0x10U );
 uint32_t* NVIC_ISER0 = (uint32_t*) NVIC_ISER_BASEADDR ;
 
 
-uint32_t* NVIC_IPR1 = (uint32_t*) ( NVIC_IPR_BASEADDR + 0x04U );
-uint32_t* NVIC_IPR2 = (uint32_t*) ( NVIC_IPR_BASEADDR + 0x08U );
+uint32_t* NVIC_IPR5 = (uint32_t*) ( NVIC_IPR_BASEADDR + 0x14U );
 
 uint32_t* EXTI_FTSR = (uint32_t*) ( EXTI_BASEADDR + 0x0CU );
 uint32_t* EXTI_IMR = (uint32_t*) EXTI_BASEADDR ;
@@ -79,9 +78,14 @@ void INT(void)
 	/*
 	* Port Code in SYSCFG_EXTICRx registers
 	*/
-	*SYSCFG_EXTICR2 &= ~( 0xF << 12); //PA7
-	*SYSCFG_EXTICR2 |= ( 1U << 1);	//PB6
-	*SYSCFG_EXTICR3 |= ( 1U << 2);	//PC8
+	*SYSCFG_EXTICR2 &= ~(0xF << 8);
+	*SYSCFG_EXTICR2 |= (0x1 << 8);    // 0001 = Port B
+
+	*SYSCFG_EXTICR2 &= ~(0xF << 12);
+	*SYSCFG_EXTICR2 |= (0x0 << 12);   // 0000 = Port A
+
+	*SYSCFG_EXTICR3 &= ~(0xF << 0);
+	*SYSCFG_EXTICR3 |= (0x2 << 0);    // 0010 = Port C
 
 	/*
 	 * IMR enable
@@ -96,9 +100,8 @@ void INT(void)
 	/*
 	 * Setting Priority
 	 */
-	*NVIC_IPR1 |= (0x08 << 19);
-	*NVIC_IPR1 |= (0x09 << 27);
-	*NVIC_IPR2 |= (0x0A << 4);
+	*NVIC_IPR5 |= (0x08 << 20);
+
 }
 void toggle_LED(void)
 {
