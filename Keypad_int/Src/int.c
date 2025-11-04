@@ -124,7 +124,7 @@ void INT(void)
 	/*
 	 * Setting Priority
 	 */
-	*NVIC_IPR5 |= (0x08 << 20);
+	*NVIC_IPR5 |= (0x08 << 24);
 
 }
 

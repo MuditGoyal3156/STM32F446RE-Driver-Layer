@@ -22,7 +22,7 @@
 
 void delay(void)
 {
-	for(uint32_t i = 0 ; i< 250000 ; i++);
+	for(uint32_t i = 0 ; i< 300000 ; i++);
 }
 
 uint32_t* EXTI_PR = (uint32_t*) ( EXTI_BASEADDR + 0x14U ) ;
@@ -31,10 +31,38 @@ uint32_t* GPIOB_IDR = (uint32_t*) ( GPIOB_IDRADDR ) ;
 
 uint32_t* GPIOA_ODR1 = (uint32_t*)GPIOA_ODRADDR;
 
+/*
+ * POINTERS FOR LEDs
+ */
+extern uint32_t* GPIOA_MODER; // Use the one from int.c
+extern uint32_t* GPIOB_MODER; // Use the one from int.c
+uint32_t* GPIOB_ODR = (uint32_t*) ( GPIOB_BASEADDR + 0x14U ); // This one is new, so we define it
+
+
+/*
+ * FUNCTION TO CONFIGURE LEDS
+ */
+void LED_GPIO_Init(void)
+{
+    // Note: GPIOA and GPIOB clocks are already enabled by GPIO() in int.c
+    // We just need to set the MODER registers for PA9 and PB10.
+
+    // Set PA9 to General-purpose output mode (01)
+    *GPIOA_MODER &= ~(3U << 18); // Clear bits 19:18
+    *GPIOA_MODER |= (1U << 18);  // Set to 01
+
+    // Set PB10 to General-purpose output mode (01)
+    *GPIOB_MODER &= ~(3U << 20); // Clear bits 21:20
+    *GPIOB_MODER |= (1U << 20);  // Set to 01
+}
+
+
 int main(void)
 {
 	GPIO();
 	INT();
+	LED_GPIO_Init();
+
 	for(;;);
 }
 
@@ -43,16 +71,15 @@ void EXTI9_5_IRQHandler(void)
 {
     if (*EXTI_PR & (1 << 6))
     {
-    	delay();
+    	delay(); // This is the debounce delay
     	*EXTI_PR |= (1 << 6);
     	*GPIOA_ODR1 &= ~(1 << 5); // PA5 LOW
 
     	if(!(*GPIOB_IDR  & ( 1 << 6 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("1\n");
-
+    		*GPIOA_ODR1 ^= (1 << 9); // Toggle PA9
     	}
 
     	*GPIOA_ODR1 |= (1 << 5); // PA5 HIGH
@@ -61,9 +88,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 6 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("4\n");
-
+    		*GPIOB_ODR ^= (1 << 10); // Toggle PB10
     	}
     	*GPIOA_ODR1 |= (1 << 6); // PA6 HIGH
 
@@ -71,9 +97,9 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 6 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("7\n");
-
+    		*GPIOA_ODR1 ^= (1 << 9); // Toggle PA9
+    		*GPIOB_ODR ^= (1 << 10); // Toggle PB10
     	}
 
     	*GPIOA_ODR1 |= (1 << 7); // PA7 HIGH
@@ -82,9 +108,9 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 6 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("*\n");
-
+    		*GPIOA_ODR1 |= (1 << 9); // PA9 ON
+    		*GPIOB_ODR |= (1 << 10); // PB10 ON
     	}
 
     	*GPIOA_ODR1 |= (1 << 8); // PA8 HIGH
@@ -92,7 +118,7 @@ void EXTI9_5_IRQHandler(void)
 
     if (*EXTI_PR & (1 << 7))
     {
-    	delay();
+    	delay();  // This is the debounce delay
     	*EXTI_PR |= (1 << 7);
 
     	*GPIOA_ODR1 &= ~(1 << 5); // PA5 LOW
@@ -100,9 +126,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 7 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("2\n");
-
+    		*GPIOA_ODR1 ^= (1 << 9); // Toggle PA9
     	}
 
     	*GPIOA_ODR1 |= (1 << 5); // PA5 HIGH
@@ -111,9 +136,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 7 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("5\n");
-
+    		*GPIOB_ODR ^= (1 << 10); // Toggle PB10
     	}
     	*GPIOA_ODR1 |= (1 << 6); // PA6 HIGH
 
@@ -121,9 +145,9 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 7 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("8\n");
-
+    		*GPIOA_ODR1 ^= (1 << 9); // Toggle PA9
+    		*GPIOB_ODR ^= (1 << 10); // Toggle PB10
     	}
 
     	*GPIOA_ODR1 |= (1 << 7); // PA7 HIGH
@@ -132,9 +156,9 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 7 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("0\n");
-
+    		*GPIOA_ODR1 &= ~(1 << 9); // PA9 OFF
+    		*GPIOB_ODR &= ~(1 << 10); // PB10 OFF
     	}
 
     	*GPIOA_ODR1 |= (1 << 8); // PA8 HIGH
@@ -142,7 +166,7 @@ void EXTI9_5_IRQHandler(void)
 
     if (*EXTI_PR & (1 << 8))
     {
-    	delay();
+    	delay(); // This is the debounce delay
 
     	*EXTI_PR |= (1 << 8);
 
@@ -151,9 +175,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 8 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("3\n");
-
+    		*GPIOA_ODR1 ^= (1 << 9); // Toggle PA9
     	}
 
     	*GPIOA_ODR1 |= (1 << 5); // PA5 HIGH
@@ -162,9 +185,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 8 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("6\n");
-
+    		*GPIOB_ODR ^= (1 << 10); // Toggle PB10
     	}
     	*GPIOA_ODR1 |= (1 << 6); // PA6 HIGH
 
@@ -172,9 +194,9 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 8 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("9\n");
-
+    		*GPIOA_ODR1 ^= (1 << 9); // Toggle PA9
+    		*GPIOB_ODR ^= (1 << 10); // Toggle PB10
     	}
 
     	*GPIOA_ODR1 |= (1 << 7); // PA7 HIGH
@@ -183,9 +205,9 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 8 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("#\n");
-
+    		*GPIOA_ODR1 |= (1 << 9); // PA9 ON
+    		*GPIOB_ODR |= (1 << 10); // PB10 ON
     	}
 
     	*GPIOA_ODR1 |= (1 << 8); // PA8 HIGH
@@ -193,7 +215,7 @@ void EXTI9_5_IRQHandler(void)
 
     if (*EXTI_PR & (1 << 9))
     {
-    	delay();
+    	delay(); // This is the debounce delay
 
         *EXTI_PR |= (1 << 9);
     	*GPIOA_ODR1 &= ~(1 << 5); // PA5 LOW
@@ -201,9 +223,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 9 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("A\n");
-
+    		// No LED action
     	}
 
     	*GPIOA_ODR1 |= (1 << 5); // PA5 HIGH
@@ -212,9 +233,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 9 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("B\n");
-
+    		// No LED action
     	}
     	*GPIOA_ODR1 |= (1 << 6); // PA6 HIGH
 
@@ -222,9 +242,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 9 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("C\n");
-
+    		// No LED action
     	}
 
     	*GPIOA_ODR1 |= (1 << 7); // PA7 HIGH
@@ -233,9 +252,8 @@ void EXTI9_5_IRQHandler(void)
     	if(!(*GPIOB_IDR  & ( 1 << 9 )))
     	{
     		//Key is Pressed
-    		delay();
     		printf("D\n");
-
+    		// No LED action
     	}
 
     	*GPIOA_ODR1 |= (1 << 8); // PA8 HIGH
