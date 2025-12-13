@@ -84,6 +84,9 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
 	//6. Configure the CPHA
 	tempreg |=pSPIHandle->SPIConfig.SPI_CPHA << 0;
 
+	//7. Configure the SSM
+	tempreg |=pSPIHandle->SPIConfig.SPI_SSM << 9;
+
 	pSPIHandle->pSPIx->CR1 = tempreg;
 
 
@@ -150,7 +153,38 @@ void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer,uint32_t Len)
 
 }
 
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx , uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		pSPIx->CR1 |= ( 1 << 6);
+	}else
+	{
+		pSPIx->CR1 &= ~( 1 << 6);
+	}
+}
 
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx , uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+		{
+			pSPIx->CR1 |= ( 1 << 8);
+		}else
+		{
+			pSPIx->CR1 &= ~( 1 << 8);
+		}
+}
+
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx , uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+		{
+			pSPIx->CR2 |= ( 1 << 2);
+		}else
+		{
+			pSPIx->CR2 &= ~( 1 << 2);
+		}
+}
 void SPI_IRQInterruptConfig(uint8_t IRQNumber , uint8_t EnorDi)
 {
 
