@@ -76,6 +76,10 @@ void GPIO_PeriClockControl(GPIO_RegDef_t *pGPIOx , uint8_t EnorDi)
 void GPIO_Init(GPIO_Handle_t *pGPIOHandle)
 {
 	uint32_t temp = 0;
+
+	//Enable peripheral clock
+	GPIO_PeriClockControl(pGPIOHandle->pGPIOx , ENABLE);
+
 	//configure mode
 
 	if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG)
@@ -262,14 +266,14 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber , uint8_t EnorDi)
 	}
 }
 
-void GPIO_IRQPriorityConfig(uint8_t IRQNumber , uint8_t IRQPriority)
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber , uint32_t IRQPriority)
 {
 	//1.Find IPR register
 	uint8_t iprx = IRQNumber / 4;
 	uint8_t iprx_section = IRQNumber % 4;
 
 	uint8_t shift_amount = ( 8 * iprx_section ) + ( 8 - NO_PR_BITS_IMPLEMENTED );
-	*( NVIC_PR_BASE_ADDR + ( iprx * 4 ) ) |= ( IRQPriority << shift_amount );
+	*( NVIC_PR_BASE_ADDR + iprx ) |= ( IRQPriority << shift_amount );
 }
 
 void GPIO_IRQHandling(uint8_t PinNumber)

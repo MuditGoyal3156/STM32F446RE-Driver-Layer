@@ -1,5 +1,6 @@
-"./Src/004led_button_int.o"
+"./Src/005spi_tx_testing.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Startup/startup_stm32f446retx.o"
 "./drivers/Src/stm32f446xx_gpio_driver.o"
+"./drivers/Src/stm32f446xx_spi_driver.o"
