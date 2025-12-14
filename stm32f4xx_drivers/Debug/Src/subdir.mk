@@ -5,17 +5,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Src/006_spi_txonly_arduino.c \
+../Src/008soi_message_rcv_it.c \
 ../Src/syscalls.c \
 ../Src/sysmem.c 
 
 OBJS += \
-./Src/006_spi_txonly_arduino.o \
+./Src/008soi_message_rcv_it.o \
 ./Src/syscalls.o \
 ./Src/sysmem.o 
 
 C_DEPS += \
-./Src/006_spi_txonly_arduino.d \
+./Src/008soi_message_rcv_it.d \
 ./Src/syscalls.d \
 ./Src/sysmem.d 
 
@@ -27,7 +27,7 @@ Src/%.o Src/%.su Src/%.cyclo: ../Src/%.c Src/subdir.mk
 clean: clean-Src
 
 clean-Src:
-	-$(RM) ./Src/006_spi_txonly_arduino.cyclo ./Src/006_spi_txonly_arduino.d ./Src/006_spi_txonly_arduino.o ./Src/006_spi_txonly_arduino.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
+	-$(RM) ./Src/008soi_message_rcv_it.cyclo ./Src/008soi_message_rcv_it.d ./Src/008soi_message_rcv_it.o ./Src/008soi_message_rcv_it.su ./Src/syscalls.cyclo ./Src/syscalls.d ./Src/syscalls.o ./Src/syscalls.su ./Src/sysmem.cyclo ./Src/sysmem.d ./Src/sysmem.o ./Src/sysmem.su
 
 .PHONY: clean-Src
 

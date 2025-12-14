@@ -8,7 +8,7 @@
 #ifndef INC_STM32F446XX_H_
 #define INC_STM32F446XX_H_
 #include <stdint.h>
-
+#include <stddef.h>
 #define __vo		volatile
 
 /*
@@ -352,7 +352,11 @@ typedef struct
 #define IRQ_NO_EXTI3			9
 #define IRQ_NO_EXTI4			10
 #define IRQ_NO_EXTI9_5			23
+#define IRQ_NO_SPI1 			36
+#define IRQ_NO_SPI2 			37
 #define IRQ_NO_EXTI15_10		40
+#define IRQ_NO_SPI3 			51
+#define IRQ_NO_SPI4				84
 
 /*
  * IRQ Priority

@@ -1,4 +1,4 @@
-"./Src/006_spi_txonly_arduino.o"
+"./Src/008soi_message_rcv_it.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"
 "./Startup/startup_stm32f446retx.o"
