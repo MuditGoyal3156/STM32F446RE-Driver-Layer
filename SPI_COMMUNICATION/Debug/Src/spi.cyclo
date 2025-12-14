@@ -1,0 +1,6 @@
+../Src/spi.c:17:6:SPI2_Clk_EN	1
+../Src/spi.c:23:6:SPI2_Init	7
+../Src/spi.c:90:6:SPI2_Data_Send	7
+../Src/spi.c:119:6:SPI2_Data_Read	6
+../Src/spi.c:154:6:SPI_EN	1
+../Src/spi.c:160:6:SPI_DI	2
