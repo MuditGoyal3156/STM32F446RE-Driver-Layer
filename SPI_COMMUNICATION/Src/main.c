@@ -17,12 +17,18 @@
  */
 
 #include "spi.h"
+#include <string.h>
 
 #define GPIOB_BASEADDR			0x40020400U
-#define RCC_AHB1ENR_ADDR		RCC_BASEADDR +  0x30U
-#define GPIOB_MODER_ADDR		GPIOB_BASEADDR + 0x00U
-#define GPIOB_OSPEEDR_ADDR		GPIOB_BASEADDR + 0x08U
-#define GPIOB_AFRH_ADDR			GPIOB_BASEADDR + 0x20U//(0101)
+#define RCC_AHB1ENR_ADDR		(RCC_BASEADDR +  0x30U)
+#define GPIOB_MODER_ADDR		(GPIOB_BASEADDR + 0x00U)
+#define GPIOB_OSPEEDR_ADDR		(GPIOB_BASEADDR + 0x08U)
+#define GPIOB_AFRH_ADDR			(GPIOB_BASEADDR + 0x24U)
+
+void delay(void)
+{
+	for(uint32_t i = 0 ; i< 250000 ; i++);
+}
 
 void GPIO_Init(void)
 {
@@ -33,10 +39,10 @@ void GPIO_Init(void)
 	 * PB14 --> MISO
 	 * PB15 --> MOSI
 	 */
-	uint32_t *AHB1ENR = (uint32_t *) RCC_AHB1ENR_ADDR;
-	uint32_t *GPIOB_MODER = (uint32_t *) GPIOB_MODER_ADDR;
-	uint32_t *GPIOB_OSPEEDR = (uint32_t *) GPIOB_OSPEEDR_ADDR;
-	uint32_t *GPIOB_AFRH = (uint32_t *) GPIOB_AFRH_ADDR;
+	volatile uint32_t *AHB1ENR = (volatile uint32_t *) RCC_AHB1ENR_ADDR;
+	volatile uint32_t *GPIOB_MODER = (volatile uint32_t *) GPIOB_MODER_ADDR;
+	volatile uint32_t *GPIOB_OSPEEDR = (volatile uint32_t *) GPIOB_OSPEEDR_ADDR;
+	volatile uint32_t *GPIOB_AFRH = (volatile uint32_t *) GPIOB_AFRH_ADDR;
 
 	// 1. Enable GPIOB Peripheral Clock
 	*AHB1ENR &= ~( 1U << 1);	//Reset Bit
@@ -46,37 +52,37 @@ void GPIO_Init(void)
 	// 2. Set Mode as Alternate function
 	//PB12
 	*GPIOB_MODER &= ~( 3U << 24); //Reset Bit
-	*GPIOB_MODER |= ( 2U << 24); //Set Bit
+	*GPIOB_MODER |= ( 1U << 25); //Set Bit
 
 	//PB13
 	*GPIOB_MODER &= ~( 3U << 26); //Reset Bit
-	*GPIOB_MODER |= ( 2U << 26); //Set Bit
+	*GPIOB_MODER |= ( 1U << 27); //Set Bit
 
 	//PB14
 	*GPIOB_MODER &= ~( 3U << 28); //Reset Bit
-	*GPIOB_MODER |= ( 2U << 28); //Set Bit
+	*GPIOB_MODER |= ( 1U << 29); //Set Bit
 
 	//PB15
 	*GPIOB_MODER &= ~( 3U << 30); //Reset Bit
-	*GPIOB_MODER |= ( 2U << 30); //Set Bit
+	*GPIOB_MODER |= ( 1U << 31); //Set Bit
 
 
 	//3. Set Speed
 	//PB12
 	*GPIOB_OSPEEDR &= ~( 3U << 24); //Reset Bit
-	*GPIOB_OSPEEDR |= ( 3U << 25); //Set Bit
+	*GPIOB_OSPEEDR |= ( 3U << 24); //Set Bit
 
 	//PB13
 	*GPIOB_OSPEEDR &= ~( 3U << 26); //Reset Bit
-	*GPIOB_OSPEEDR |= ( 3U << 27); //Set Bit
+	*GPIOB_OSPEEDR |= ( 3U << 26); //Set Bit
 
 	//PB14
 	*GPIOB_OSPEEDR &= ~( 3U << 28); //Reset Bit
-	*GPIOB_OSPEEDR |= ( 3U << 29); //Set Bit
+	*GPIOB_OSPEEDR |= ( 3U << 28); //Set Bit
 
 	//PB15
 	*GPIOB_OSPEEDR &= ~( 3U << 30); //Reset Bit
-	*GPIOB_OSPEEDR |= ( 3U << 31); //Set Bit
+	*GPIOB_OSPEEDR |= ( 3U << 30); //Set Bit
 
 	//4. Select AF Mode 5
 	//PB12
@@ -97,6 +103,26 @@ void GPIO_Init(void)
 }
 int main(void)
 {
+	const char string[]= "Hello world";
+	SPI_Handle_t SPI2Handle;
 	GPIO_Init();
-	for(;;);
+
+	SPI2_Init(SPI_DEVICE_MODE_MASTER,SPI_BUS_CONFIG_FD,SPI_SCLK_SPEED_DIV8, SPI_DFF_8BITS, SPI_CPOL_HIGH, SPI_CPHA_HIGH, SPI_SSM_EN);
+
+	while(1)
+	{
+		SPI_EN();
+		SPI2_Data_Send((uint8_t*)string,strlen(string));
+		SPI_DI();
+		delay();
+	}
+
+}
+
+
+
+// ISR
+void SPI2_IRQHandler(void)
+{
+    SPI2_IRQHandling(&SPI2Handle);
 }
