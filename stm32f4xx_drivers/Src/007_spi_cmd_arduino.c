@@ -114,11 +114,11 @@ int main(void)
 	SPI2_Inits();
 
 	SPI_SSOEConfig(SPI2 , ENABLE);
-
+	GPIO_ButtonInit();
 
 	while(1)
 	{
-		while(!(GPIO_ReadFromInputPin(GPIOC,GPIO_PIN_NO_13)));
+		while((GPIO_ReadFromInputPin(GPIOC,GPIO_PIN_NO_13)));
 
 		delay();
 

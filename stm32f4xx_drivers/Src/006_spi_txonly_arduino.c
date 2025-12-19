@@ -44,8 +44,8 @@ void SPI2_GPIOInits(void)
 	GPIO_Init(&SPIPins);
 
 	//MISO
-	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-	//GPIO_Init(&SPIPins);
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+	GPIO_Init(&SPIPins);
 
 	//NSS
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
@@ -58,7 +58,7 @@ void SPI2_Inits(void)
 	SPI2handle.pSPIx = SPI2;
 	SPI2handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8;
+	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV64;
 	SPI2handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
 	SPI2handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
 	SPI2handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
@@ -85,12 +85,14 @@ int main(void)
 
 	SPI2_Inits();
 
+	GPIO_ButtonInit();
+
 	SPI_SSOEConfig(SPI2 , ENABLE);
 
 
 	while(1)
 	{
-	while(!(GPIO_ReadFromInputPin(GPIOC,GPIO_PIN_NO_13)));
+	while((GPIO_ReadFromInputPin(GPIOC,GPIO_PIN_NO_13)));
 
 	delay();
 
