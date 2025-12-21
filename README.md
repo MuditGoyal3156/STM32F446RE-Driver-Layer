@@ -1,11 +1,12 @@
-STM32F446RE – Driver Layer
+**STM32F446RE – Driver Layer**
 
 This repository contains custom bare-metal drivers for the STM32F446RE microcontroller, written using direct register-level programming (CMSIS-based, no HAL / no LL).
 
 The drivers are implemented for commonly used peripherals and validated using small test applications.
+____________________________________________________________________________________________________________________________________________________________________
+✅ **Supported Peripherals**
 
-✅ Supported Peripherals
-🔹 GPIO
+🔹**GPIO**
 
 Pin mode configuration (Input / Output / Alternate / Analog)
 
@@ -21,7 +22,7 @@ IRQ configuration
 
 Callback-based interrupt handling
 
-🔹 SPI
+🔹 **SPI**
 
 Master and Slave modes
 
@@ -33,7 +34,7 @@ Polling and interrupt-based transmission
 
 Multi-byte TX / RX support
 
-🔹 I2C
+🔹 **I2C**
 
 Master mode communication
 
@@ -45,7 +46,7 @@ ACK / NACK management
 
 Interrupt-based flow
 
-🔹 UART (USART)
+🔹 **UART (USART)**
 
 Baud rate configuration
 
@@ -54,9 +55,8 @@ Transmit and receive support
 Polling and interrupt modes
 
 Debug output support over serial terminal
-
-
-🛠 Development Environment
+____________________________________________________________________________________________________________________________________________________________________
+🛠 **Development Environment**
 
 MCU: STM32F446RE
 
@@ -67,8 +67,8 @@ IDE: STM32CubeIDE / VS Code
 Debugger: ST-Link
 
 Logic Analyzer used for verification
-
-📌 Notes
+____________________________________________________________________________________________________________________________________________________________________
+📌 **Notes**
 
 All drivers are written using direct register access
 
