@@ -1,4 +1,4 @@
-#**STM32F446RE – Driver Layer**
+#STM32F446RE – Driver Layer
 
 This repository contains custom bare-metal drivers for the STM32F446RE microcontroller, written using direct register-level programming (CMSIS-based, no HAL / no LL).
 
