@@ -43,7 +43,7 @@ Address and data phase control
 
 ACK / NACK management
 
-Interrupt-based flow (work in progress)
+Interrupt-based flow
 
 🔹 UART (USART)
 
@@ -55,34 +55,6 @@ Polling and interrupt modes
 
 Debug output support over serial terminal
 
-📁 Project Structure
-STM32F446RE-Driver-Layer/
-│
-├── stm32f446xx_drivers/
-│   ├── Inc/
-│   │   ├── stm32f446xx.h
-│   │   ├── stm32f446xx_gpio_driver.h
-│   │   ├── stm32f446xx_spi_driver.h
-│   │   ├── stm32f446xx_i2c_driver.h
-│   │   └── stm32f446xx_usart_driver.h
-│   │
-│   └── Src/
-│       ├── stm32f446xx_gpio_driver.c
-│       ├── stm32f446xx_spi_driver.c
-│       ├── stm32f446xx_i2c_driver.c
-│       └── stm32f446xx_usart_driver.c
-│
-├── 001HelloWorld/
-├── 001SPISlaveRxString/
-├── 002SPISlaveCmdHandling/
-├── 003SPISlaveUartReadOverSPI/
-├── SPI_COMMUNICATION/
-└── README.md
-
-
-stm32f446xx_drivers/ contains the driver layer
-
-Numbered folders are test applications for validating drivers
 
 🛠 Development Environment
 
@@ -94,7 +66,7 @@ IDE: STM32CubeIDE / VS Code
 
 Debugger: ST-Link
 
-Logic Analyzer used for SPI verification
+Logic Analyzer used for verification
 
 📌 Notes
 
