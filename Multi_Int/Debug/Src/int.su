@@ -1,5 +1,0 @@
-../Src/int.c:42:6:GPIO	4	static
-../Src/int.c:66:6:INT	4	static
-../Src/int.c:106:6:toggle_LED	4	static
-../Src/int.c:111:6:LED_ON	4	static
-../Src/int.c:116:6:LED_OFF	4	static

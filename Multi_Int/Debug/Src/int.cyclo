@@ -1,5 +1,0 @@
-../Src/int.c:42:6:GPIO	1
-../Src/int.c:66:6:INT	1
-../Src/int.c:106:6:toggle_LED	1
-../Src/int.c:111:6:LED_ON	1
-../Src/int.c:116:6:LED_OFF	1
