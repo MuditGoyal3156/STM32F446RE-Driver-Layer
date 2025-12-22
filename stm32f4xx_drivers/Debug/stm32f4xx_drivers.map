@@ -326,8 +326,8 @@ Discarded input sections
  .debug_macro   0x00000000       0x6a ./drivers/Src/stm32f446xx_gpio_driver.o
  .debug_macro   0x00000000      0x1df ./drivers/Src/stm32f446xx_gpio_driver.o
  .debug_macro   0x00000000      0x190 ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_macro   0x00000000      0x509 ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_macro   0x00000000       0x40 ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_macro   0x00000000      0x52c ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_macro   0x00000000       0x82 ./drivers/Src/stm32f446xx_gpio_driver.o
  .debug_macro   0x00000000       0xc4 ./drivers/Src/stm32f446xx_gpio_driver.o
  .group         0x00000000        0xc ./drivers/Src/stm32f446xx_i2c_driver.o
  .group         0x00000000        0xc ./drivers/Src/stm32f446xx_i2c_driver.o
@@ -350,6 +350,18 @@ Discarded input sections
                 0x00000000      0x10c ./drivers/Src/stm32f446xx_i2c_driver.o
  .text.I2C_IRQPriorityConfig
                 0x00000000       0x54 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .text.I2C_MasterSendDataIT
+                0x00000000       0x86 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .text.I2C_MasterReceiveDataIT
+                0x00000000       0x8e ./drivers/Src/stm32f446xx_i2c_driver.o
+ .text.I2C_CloseSendData
+                0x00000000       0x5e ./drivers/Src/stm32f446xx_i2c_driver.o
+ .text.I2C_CloseReceiveData
+                0x00000000       0x64 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .text.I2C_EV_IRQHandling
+                0x00000000      0x232 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .text.I2C_ER_IRQHandling
+                0x00000000      0x10c ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000      0xae4 ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000       0x22 ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000       0x8e ./drivers/Src/stm32f446xx_i2c_driver.o
@@ -358,10 +370,10 @@ Discarded input sections
  .debug_macro   0x00000000       0x6a ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000      0x1df ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000      0x190 ./drivers/Src/stm32f446xx_i2c_driver.o
- .debug_macro   0x00000000      0x509 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .debug_macro   0x00000000      0x52c ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000       0xc4 ./drivers/Src/stm32f446xx_i2c_driver.o
  .debug_macro   0x00000000       0xb2 ./drivers/Src/stm32f446xx_i2c_driver.o
- .debug_macro   0x00000000       0x40 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .debug_macro   0x00000000       0x82 ./drivers/Src/stm32f446xx_i2c_driver.o
  .group         0x00000000        0xc ./drivers/Src/stm32f446xx_spi_driver.o
  .group         0x00000000        0xc ./drivers/Src/stm32f446xx_spi_driver.o
  .group         0x00000000        0xc ./drivers/Src/stm32f446xx_spi_driver.o
@@ -432,12 +444,12 @@ Discarded input sections
  .debug_macro   0x00000000       0x6a ./drivers/Src/stm32f446xx_spi_driver.o
  .debug_macro   0x00000000      0x1df ./drivers/Src/stm32f446xx_spi_driver.o
  .debug_macro   0x00000000      0x190 ./drivers/Src/stm32f446xx_spi_driver.o
- .debug_macro   0x00000000      0x509 ./drivers/Src/stm32f446xx_spi_driver.o
+ .debug_macro   0x00000000      0x52c ./drivers/Src/stm32f446xx_spi_driver.o
  .debug_macro   0x00000000       0xc4 ./drivers/Src/stm32f446xx_spi_driver.o
- .debug_macro   0x00000000       0x40 ./drivers/Src/stm32f446xx_spi_driver.o
+ .debug_macro   0x00000000       0x82 ./drivers/Src/stm32f446xx_spi_driver.o
  .debug_macro   0x00000000       0xac ./drivers/Src/stm32f446xx_spi_driver.o
  .debug_line    0x00000000      0xa2d ./drivers/Src/stm32f446xx_spi_driver.o
- .debug_str     0x00000000     0x64fa ./drivers/Src/stm32f446xx_spi_driver.o
+ .debug_str     0x00000000     0x660c ./drivers/Src/stm32f446xx_spi_driver.o
  .comment       0x00000000       0x44 ./drivers/Src/stm32f446xx_spi_driver.o
  .debug_frame   0x00000000      0x31c ./drivers/Src/stm32f446xx_spi_driver.o
  .ARM.attributes
@@ -720,7 +732,7 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                 0x08000000                g_pfnVectors
                 0x080001c4                        . = ALIGN (0x4)
 
-.text           0x080001c4      0xd34
+.text           0x080001c4      0xd7c
                 0x080001c4                        . = ALIGN (0x4)
  *(.text)
  .text          0x080001c4       0x40 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
@@ -870,94 +882,93 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .text.I2C_ExecuteReceiveAddressPhase
                 0x08000c14       0x2c ./drivers/Src/stm32f446xx_i2c_driver.o
  .text.I2C_ClearADDRFlag
-                0x08000c40       0x20 ./drivers/Src/stm32f446xx_i2c_driver.o
+                0x08000c40       0x76 ./drivers/Src/stm32f446xx_i2c_driver.o
  .text.I2C_MasterSendData
-                0x08000c60       0xd6 ./drivers/Src/stm32f446xx_i2c_driver.o
-                0x08000c60                I2C_MasterSendData
+                0x08000cb6       0xd2 ./drivers/Src/stm32f446xx_i2c_driver.o
+                0x08000cb6                I2C_MasterSendData
  .text.I2C_MasterReceiveData
-                0x08000d36      0x128 ./drivers/Src/stm32f446xx_i2c_driver.o
-                0x08000d36                I2C_MasterReceiveData
+                0x08000d88      0x120 ./drivers/Src/stm32f446xx_i2c_driver.o
+                0x08000d88                I2C_MasterReceiveData
  .text.I2C_PeripheralControl
-                0x08000e5e       0x38 ./drivers/Src/stm32f446xx_i2c_driver.o
-                0x08000e5e                I2C_PeripheralControl
- *fill*         0x08000e96        0x2 
+                0x08000ea8       0x38 ./drivers/Src/stm32f446xx_i2c_driver.o
+                0x08000ea8                I2C_PeripheralControl
  .text.__libc_init_array
-                0x08000e98       0x48 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
-                0x08000e98                __libc_init_array
+                0x08000ee0       0x48 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
+                0x08000ee0                __libc_init_array
  *(.glue_7)
- .glue_7        0x08000ee0        0x0 linker stubs
+ .glue_7        0x08000f28        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x08000ee0        0x0 linker stubs
+ .glue_7t       0x08000f28        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x08000ee0        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x08000f28        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x08000ee0        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08000ee0                _init
- .init          0x08000ee4        0x8 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x08000f28        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08000f28                _init
+ .init          0x08000f2c        0x8 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x08000eec        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x08000eec                _fini
- .fini          0x08000ef0        0x8 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
-                0x08000ef8                        . = ALIGN (0x4)
-                0x08000ef8                        _etext = .
+ .fini          0x08000f34        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x08000f34                _fini
+ .fini          0x08000f38        0x8 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x08000f40                        . = ALIGN (0x4)
+                0x08000f40                        _etext = .
 
-.vfp11_veneer   0x08000ef8        0x0
- .vfp11_veneer  0x08000ef8        0x0 linker stubs
+.vfp11_veneer   0x08000f40        0x0
+ .vfp11_veneer  0x08000f40        0x0 linker stubs
 
-.v4_bx          0x08000ef8        0x0
- .v4_bx         0x08000ef8        0x0 linker stubs
+.v4_bx          0x08000f40        0x0
+ .v4_bx         0x08000f40        0x0 linker stubs
 
-.iplt           0x08000ef8        0x0
- .iplt          0x08000ef8        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x08000f40        0x0
+ .iplt          0x08000f40        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x08000ef8        0x0
-                0x08000ef8                        . = ALIGN (0x4)
+.rodata         0x08000f40        0x0
+                0x08000f40                        . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
-                0x08000ef8                        . = ALIGN (0x4)
+                0x08000f40                        . = ALIGN (0x4)
 
-.ARM.extab      0x08000ef8        0x0
-                0x08000ef8                        . = ALIGN (0x4)
+.ARM.extab      0x08000f40        0x0
+                0x08000f40                        . = ALIGN (0x4)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x08000ef8                        . = ALIGN (0x4)
+                0x08000f40                        . = ALIGN (0x4)
 
-.ARM            0x08000ef8        0x0
-                0x08000ef8                        . = ALIGN (0x4)
-                0x08000ef8                        __exidx_start = .
+.ARM            0x08000f40        0x0
+                0x08000f40                        . = ALIGN (0x4)
+                0x08000f40                        __exidx_start = .
  *(.ARM.exidx*)
-                0x08000ef8                        __exidx_end = .
-                0x08000ef8                        . = ALIGN (0x4)
+                0x08000f40                        __exidx_end = .
+                0x08000f40                        . = ALIGN (0x4)
 
-.preinit_array  0x08000ef8        0x0
-                0x08000ef8                        . = ALIGN (0x4)
-                0x08000ef8                        PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08000f40        0x0
+                0x08000f40                        . = ALIGN (0x4)
+                0x08000f40                        PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x08000ef8                        PROVIDE (__preinit_array_end = .)
-                0x08000ef8                        . = ALIGN (0x4)
+                0x08000f40                        PROVIDE (__preinit_array_end = .)
+                0x08000f40                        . = ALIGN (0x4)
 
-.init_array     0x08000ef8        0x4
-                0x08000ef8                        . = ALIGN (0x4)
-                0x08000ef8                        PROVIDE (__init_array_start = .)
+.init_array     0x08000f40        0x4
+                0x08000f40                        . = ALIGN (0x4)
+                0x08000f40                        PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x08000ef8        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x08000efc                        PROVIDE (__init_array_end = .)
-                0x08000efc                        . = ALIGN (0x4)
+ .init_array    0x08000f40        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x08000f44                        PROVIDE (__init_array_end = .)
+                0x08000f44                        . = ALIGN (0x4)
 
-.fini_array     0x08000efc        0x4
-                0x08000efc                        . = ALIGN (0x4)
+.fini_array     0x08000f44        0x4
+                0x08000f44                        . = ALIGN (0x4)
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x08000efc        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x08000f44        0x4 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x08000f00                        . = ALIGN (0x4)
-                0x08000f00                        _sidata = LOADADDR (.data)
+                0x08000f48                        . = ALIGN (0x4)
+                0x08000f48                        _sidata = LOADADDR (.data)
 
-.rel.dyn        0x08000f00        0x0
- .rel.iplt      0x08000f00        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x08000f48        0x0
+ .rel.iplt      0x08000f48        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.data           0x20000000       0x14 load address 0x08000f00
+.data           0x20000000       0x14 load address 0x08000f48
                 0x20000000                        . = ALIGN (0x4)
                 0x20000000                        _sdata = .
  *(.data)
@@ -973,37 +984,37 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
                 0x20000014                        . = ALIGN (0x4)
                 0x20000014                        _edata = .
 
-.igot.plt       0x20000014        0x0 load address 0x08000f14
+.igot.plt       0x20000014        0x0 load address 0x08000f5c
  .igot.plt      0x20000014        0x0 C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x20000014                        . = ALIGN (0x4)
 
-.bss            0x20000014       0x48 load address 0x08000f14
+.bss            0x20000014       0x58 load address 0x08000f5c
                 0x20000014                        _sbss = .
                 0x20000014                        __bss_start__ = _sbss
  *(.bss)
  .bss           0x20000014       0x1c C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.bss*)
  .bss.I2C1Handle
-                0x20000030        0xc ./Src/010i2c_master_rx_testing.o
+                0x20000030       0x1c ./Src/010i2c_master_rx_testing.o
                 0x20000030                I2C1Handle
- .bss.rcv_buff  0x2000003c       0x20 ./Src/010i2c_master_rx_testing.o
-                0x2000003c                rcv_buff
+ .bss.rcv_buff  0x2000004c       0x20 ./Src/010i2c_master_rx_testing.o
+                0x2000004c                rcv_buff
  *(COMMON)
-                0x2000005c                        . = ALIGN (0x4)
-                0x2000005c                        _ebss = .
-                0x2000005c                        __bss_end__ = _ebss
+                0x2000006c                        . = ALIGN (0x4)
+                0x2000006c                        _ebss = .
+                0x2000006c                        __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x2000005c      0x604 load address 0x08000f14
-                0x20000060                        . = ALIGN (0x8)
- *fill*         0x2000005c        0x4 
+                0x2000006c      0x604 load address 0x08000f5c
+                0x20000070                        . = ALIGN (0x8)
+ *fill*         0x2000006c        0x4 
                 [!provide]                        PROVIDE (end = .)
-                0x20000060                        PROVIDE (_end = .)
-                0x20000260                        . = (. + _Min_Heap_Size)
- *fill*         0x20000060      0x200 
-                0x20000660                        . = (. + _Min_Stack_Size)
- *fill*         0x20000260      0x400 
-                0x20000660                        . = ALIGN (0x8)
+                0x20000070                        PROVIDE (_end = .)
+                0x20000270                        . = (. + _Min_Heap_Size)
+ *fill*         0x20000070      0x200 
+                0x20000670                        . = (. + _Min_Stack_Size)
+ *fill*         0x20000270      0x400 
+                0x20000670                        . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
@@ -1035,19 +1046,19 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
 LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libm.a
 LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7e-m+fp/hard\libgcc.a
 
-.debug_info     0x00000000     0x13dc
- .debug_info    0x00000000      0x49a ./Src/010i2c_master_rx_testing.o
- .debug_info    0x0000049a       0x30 ./Startup/startup_stm32f446retx.o
- .debug_info    0x000004ca      0x77b ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_info    0x00000c45      0x797 ./drivers/Src/stm32f446xx_i2c_driver.o
+.debug_info     0x00000000     0x16b5
+ .debug_info    0x00000000      0x513 ./Src/010i2c_master_rx_testing.o
+ .debug_info    0x00000513       0x30 ./Startup/startup_stm32f446retx.o
+ .debug_info    0x00000543      0x77b ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_info    0x00000cbe      0x9f7 ./drivers/Src/stm32f446xx_i2c_driver.o
 
-.debug_abbrev   0x00000000      0x4d4
- .debug_abbrev  0x00000000      0x172 ./Src/010i2c_master_rx_testing.o
- .debug_abbrev  0x00000172       0x24 ./Startup/startup_stm32f446retx.o
- .debug_abbrev  0x00000196      0x17b ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_abbrev  0x00000311      0x1c3 ./drivers/Src/stm32f446xx_i2c_driver.o
+.debug_abbrev   0x00000000      0x538
+ .debug_abbrev  0x00000000      0x170 ./Src/010i2c_master_rx_testing.o
+ .debug_abbrev  0x00000170       0x24 ./Startup/startup_stm32f446retx.o
+ .debug_abbrev  0x00000194      0x17b ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_abbrev  0x0000030f      0x229 ./drivers/Src/stm32f446xx_i2c_driver.o
 
-.debug_aranges  0x00000000      0x168
+.debug_aranges  0x00000000      0x198
  .debug_aranges
                 0x00000000       0x40 ./Src/010i2c_master_rx_testing.o
  .debug_aranges
@@ -1055,10 +1066,10 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_aranges
                 0x00000068       0x70 ./drivers/Src/stm32f446xx_gpio_driver.o
  .debug_aranges
-                0x000000d8       0x90 ./drivers/Src/stm32f446xx_i2c_driver.o
+                0x000000d8       0xc0 ./drivers/Src/stm32f446xx_i2c_driver.o
 
 .debug_rnglists
-                0x00000000      0x106
+                0x00000000      0x12e
  .debug_rnglists
                 0x00000000       0x2c ./Src/010i2c_master_rx_testing.o
  .debug_rnglists
@@ -1066,9 +1077,9 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_rnglists
                 0x00000045       0x53 ./drivers/Src/stm32f446xx_gpio_driver.o
  .debug_rnglists
-                0x00000098       0x6e ./drivers/Src/stm32f446xx_i2c_driver.o
+                0x00000098       0x96 ./drivers/Src/stm32f446xx_i2c_driver.o
 
-.debug_macro    0x00000000     0x2302
+.debug_macro    0x00000000     0x2367
  .debug_macro   0x00000000      0x17d ./Src/010i2c_master_rx_testing.o
  .debug_macro   0x0000017d      0xae4 ./Src/010i2c_master_rx_testing.o
  .debug_macro   0x00000c61       0x22 ./Src/010i2c_master_rx_testing.o
@@ -1078,42 +1089,42 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x00000e65       0x6a ./Src/010i2c_master_rx_testing.o
  .debug_macro   0x00000ecf      0x1df ./Src/010i2c_master_rx_testing.o
  .debug_macro   0x000010ae      0x190 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x0000123e      0x509 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001747       0xc4 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x0000180b       0xb2 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x000018bd       0x40 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x000018fd       0x61 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x0000195e       0x2a ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001988       0x43 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x000019cb       0x34 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x000019ff      0x370 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001d6f       0x16 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001d85       0x4a ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001dcf       0x34 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001e03       0x10 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001e13       0x58 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001e6b       0x8e ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001ef9       0x1c ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00001f15      0x185 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x0000209a       0x10 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x000020aa       0x3c ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x000020e6       0x20 ./Src/010i2c_master_rx_testing.o
- .debug_macro   0x00002106       0xad ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_macro   0x000021b3       0xac ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_macro   0x0000225f       0xa3 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .debug_macro   0x0000123e      0x52c ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x0000176a       0xc4 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x0000182e       0xb2 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x000018e0       0x82 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001962       0x61 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x000019c3       0x2a ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x000019ed       0x43 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001a30       0x34 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001a64      0x370 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001dd4       0x16 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001dea       0x4a ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001e34       0x34 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001e68       0x10 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001e78       0x58 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001ed0       0x8e ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001f5e       0x1c ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x00001f7a      0x185 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x000020ff       0x10 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x0000210f       0x3c ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x0000214b       0x20 ./Src/010i2c_master_rx_testing.o
+ .debug_macro   0x0000216b       0xad ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_macro   0x00002218       0xac ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_macro   0x000022c4       0xa3 ./drivers/Src/stm32f446xx_i2c_driver.o
 
-.debug_line     0x00000000     0x1bf4
+.debug_line     0x00000000     0x1fdc
  .debug_line    0x00000000      0x6fc ./Src/010i2c_master_rx_testing.o
  .debug_line    0x000006fc       0x7b ./Startup/startup_stm32f446retx.o
  .debug_line    0x00000777      0xa25 ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_line    0x0000119c      0xa58 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .debug_line    0x0000119c      0xe40 ./drivers/Src/stm32f446xx_i2c_driver.o
 
-.debug_str      0x00000000     0x97e6
- .debug_str     0x00000000     0x97e6 ./Src/010i2c_master_rx_testing.o
-                               0x9545 (size before relaxing)
- .debug_str     0x000097e6       0x75 ./Startup/startup_stm32f446retx.o
- .debug_str     0x000097e6     0x648b ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_str     0x000097e6     0x64c0 ./drivers/Src/stm32f446xx_i2c_driver.o
+.debug_str      0x00000000     0x99d8
+ .debug_str     0x00000000     0x99d8 ./Src/010i2c_master_rx_testing.o
+                               0x9690 (size before relaxing)
+ .debug_str     0x000099d8       0x75 ./Startup/startup_stm32f446retx.o
+ .debug_str     0x000099d8     0x659d ./drivers/Src/stm32f446xx_gpio_driver.o
+ .debug_str     0x000099d8     0x66be ./drivers/Src/stm32f446xx_i2c_driver.o
 
 .comment        0x00000000       0x43
  .comment       0x00000000       0x43 ./Src/010i2c_master_rx_testing.o
@@ -1121,11 +1132,11 @@ LOAD C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .comment       0x00000043       0x44 ./drivers/Src/stm32f446xx_gpio_driver.o
  .comment       0x00000043       0x44 ./drivers/Src/stm32f446xx_i2c_driver.o
 
-.debug_frame    0x00000000      0x500
+.debug_frame    0x00000000      0x5e4
  .debug_frame   0x00000000       0xbc ./Src/010i2c_master_rx_testing.o
  .debug_frame   0x000000bc      0x1c8 ./drivers/Src/stm32f446xx_gpio_driver.o
- .debug_frame   0x00000284      0x250 ./drivers/Src/stm32f446xx_i2c_driver.o
- .debug_frame   0x000004d4       0x2c C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
+ .debug_frame   0x00000284      0x334 ./drivers/Src/stm32f446xx_i2c_driver.o
+ .debug_frame   0x000005b8       0x2c C:/ST/STM32CubeIDE_1.18.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libc_nano.a(libc_a-init.o)
 
 .debug_line_str
                 0x00000000       0x59
