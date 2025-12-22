@@ -45,6 +45,9 @@ typedef struct
 #define I2C_FM_DUTY_2			0
 #define I2C_FM_DUTY_16_9		1
 
+
+#define I2C_NO_SR		RESET
+#define I2C_SR			SET
 /*
  * Peripheral clock setup
  */
@@ -59,7 +62,8 @@ void I2C_DeInit(I2C_RegDef_t *pI2Cx);
 /*
  * Data send and receive
  */
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTXBuffer,uint8_t Len, uint8_t SlaveAddr);
+void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTXBuffer,uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
+void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRXBuffer,uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
 
 /*
  * IRQ configuration and ISR handling
