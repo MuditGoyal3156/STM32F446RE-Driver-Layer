@@ -62,8 +62,7 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 	I2C_PeriClockControl(pI2CHandle->pI2Cx,ENABLE);
 
 	//ACK Control bit
-	tempreg |= pI2CHandle->I2C_Config.I2C_ACKControl << 10;
-	pI2CHandle->pI2Cx->CR1 = tempreg;
+	pI2CHandle->pI2Cx->CR1 |= pI2CHandle->I2C_Config.I2C_ACKControl << 10;
 
 	//Configure the FREQ field of CR2
 	tempreg=0;
@@ -71,6 +70,7 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 	pI2CHandle->pI2Cx->CR2 = (tempreg & 0x3F);
 
 	//program device own address(7 bit address mode)
+	tempreg = 0;
 	tempreg |= pI2CHandle->I2C_Config.I2C_DeviceAddress << 1;
 	tempreg &= ~(1 << 15); // to select 7 bit addressing mode
 	tempreg |= (1 << 14); // 14 bit should always be 1
@@ -162,7 +162,7 @@ static void I2C_GenerateStartCondition(I2C_RegDef_t *pI2Cx)
 	pI2Cx->CR1 |= (1 << I2C_CR1_START);
 }
 
-static void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
+void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx)
 {
 	pI2Cx->CR1 |= (1 << I2C_CR1_STOP);
 }
@@ -228,7 +228,18 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTXBuffer,uint8_t Len,
 	I2C_ExecuteAddressPhase(pI2CHandle->pI2Cx, SlaveAddr);
 
 	//Confirm the address phase is completed by checking the ADDR flag in the SR1
-	while(!(pI2CHandle->pI2Cx->SR1 & 0x02));
+	while(!(pI2CHandle->pI2Cx->SR1 & 0x02))
+	{
+		if(pI2CHandle->pI2Cx->SR1 & (1 << 10))
+		    {
+		        // 1. Generate STOP
+		        I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+		        // 2. Clear AF flag
+		        pI2CHandle->pI2Cx->SR1 &= ~(1 << 10);
+		        // 3. Return/Exit to avoid hang
+		        return;
+		    }
+	}
 
 	//Clear the ADDR Flag
 	I2C_ClearADDRFlag(pI2CHandle);
@@ -251,13 +262,13 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTXBuffer,uint8_t Len,
 	//Note: generating STOP, automatically clears the BTF
 	if(Sr == I2C_NO_SR)
 	{
-	I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+		I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 	}
 
 	//Re-enable acking
 	if(pI2CHandle->I2C_Config.I2C_ACKControl == I2C_ACK_ENABLE)
 	{
-	pI2CHandle->pI2Cx->CR1 |= (1 << 10);
+		pI2CHandle->pI2Cx->CR1 |= (1 << 10);
 	}
 
 }
@@ -275,7 +286,19 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRXBuffer,uint8_t L
 	I2C_ExecuteReceiveAddressPhase(pI2CHandle->pI2Cx, SlaveAddr);
 
 	//wait till address phase is completed by checking the ADDR flag in the SR1
-	while(!(pI2CHandle->pI2Cx->SR1 & 0x02));
+	while(!(pI2CHandle->pI2Cx->SR1 & 0x02))
+	{
+		// Check for AF (Acknowledge Failure)
+		if(pI2CHandle->pI2Cx->SR1 & (1 << 10))
+		{
+		   // 1. Generate STOP
+		   I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
+		   // 2. Clear AF flag
+		   pI2CHandle->pI2Cx->SR1 &= ~(1 << 10);
+		   // 3. Return/Exit to avoid hang
+		   return;
+		}
+	}
 
 	if(Len == 1)//To read 1 byte of data from slave
 	{
@@ -335,7 +358,7 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRXBuffer,uint8_t L
 	//Re-enable acking
 	if(pI2CHandle->I2C_Config.I2C_ACKControl == I2C_ACK_ENABLE)
 	{
-	pI2CHandle->pI2Cx->CR1 |= (1 << 10);
+		pI2CHandle->pI2Cx->CR1 |= (1 << 10);
 	}
 
 
@@ -646,7 +669,7 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle)
 					pI2CHandle->pRxBuffer++;
 
 				}
-				if(pI2CHandle->RxLen == 1)
+				if(pI2CHandle->RxLen == 0)
 				{
 					//Close the I2C data reception and notify the application
 
@@ -677,7 +700,7 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 	temp2 = (pI2CHandle->pI2Cx->CR2) & ( 1 << I2C_CR2_ITERREN);
 
 
-/***********************Check for Bus error************************************/
+//Check for Bus error
 	temp1 = (pI2CHandle->pI2Cx->SR1) & ( 1<< I2C_SR1_BERR);
 	if(temp1  && temp2 )
 	{
@@ -690,7 +713,7 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 	   I2C_ApplicationEventCallback(pI2CHandle,I2C_ERROR_BERR);
 	}
 
-/***********************Check for arbitration lost error************************************/
+//Check for arbitration lost error
 	temp1 = (pI2CHandle->pI2Cx->SR1) & ( 1 << I2C_SR1_ARLO );
 	if(temp1  && temp2)
 	{
@@ -704,7 +727,7 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 
 	}
 
-/***********************Check for ACK failure  error************************************/
+//Check for ACK failure  error
 
 	temp1 = (pI2CHandle->pI2Cx->SR1) & ( 1 << I2C_SR1_AF);
 	if(temp1  && temp2)
@@ -718,7 +741,7 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 		I2C_ApplicationEventCallback(pI2CHandle,I2C_ERROR_AF);
 	}
 
-/***********************Check for Overrun/underrun error************************************/
+//Check for Overrun/underrun error
 	temp1 = (pI2CHandle->pI2Cx->SR1) & ( 1 << I2C_SR1_OVR);
 	if(temp1  && temp2)
 	{
@@ -731,7 +754,7 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 		I2C_ApplicationEventCallback(pI2CHandle,I2C_ERROR_OVR);
 	}
 
-/***********************Check for Time out error************************************/
+//Check for Time out error
 	temp1 = (pI2CHandle->pI2Cx->SR1) & ( 1 << I2C_SR1_TIMEOUT);
 	if(temp1  && temp2)
 	{
