@@ -78,6 +78,7 @@ typedef struct
 #define I2C_EV_DATA_REQ		8
 #define I2C_EV_DATA_RCV		9
 
+
 /*
  * Peripheral clock setup
  */
@@ -100,6 +101,10 @@ uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uin
 
 void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle);
 void I2C_CloseSendData(I2C_Handle_t *pI2CHandle);
+
+void I2C_SlaveSendData(I2C_RegDef_t *pI2Cx,uint8_t data);//Slave send data 1 byte at a time
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2Cx);
+
 /*
  * IRQ configuration and ISR handling
  */
@@ -112,6 +117,7 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle);
  */
 void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx , uint8_t EnorDi);
 void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx , uint8_t EnorDi);
 
 /*
  * Application Callback

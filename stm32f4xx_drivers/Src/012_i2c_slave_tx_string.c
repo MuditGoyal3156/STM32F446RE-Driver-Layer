@@ -1,17 +1,19 @@
 /*
  *
- *  Created on: Dec 19, 2025
+ *  Created on: Dec 24, 2025
  *      Author: mudit
  */
 
 #include "stm32f446xx.h"
 #include <stdint.h>
 #include <string.h>
-#include <stdio.h>
 
-extern void initialise_monitor_handles();
-#define MY_ADDR			0x61
-#define SLAVE_ADDR  	0x68
+
+#define SLAVE_ADDR  	0x68U
+#define MY_ADDR			SLAVE_ADDR
+
+uint8_t commandCode;
+
 
 //Delay function
 void delay(void)
@@ -21,7 +23,7 @@ void delay(void)
 
 I2C_Handle_t I2C1Handle;
 
-uint8_t rcv_buff[32];
+uint8_t Tx_buff[32]= "STM32 slave mode testing";//limitation of wire library in arduino is 32 bytes
 
 
 /*
@@ -76,11 +78,7 @@ void GPIO_ButtonInit(void)
 
 int main(void)
 {
-	initialise_monitor_handles();
-	printf("Application is running\n");
 
-	uint8_t commandcode;
-	uint8_t length;
 	GPIO_ButtonInit();
 
 	//Configure the pins
@@ -89,32 +87,61 @@ int main(void)
 	//Initialize the I2C peripheral
 	I2C1_Inits();
 
+	//IRQ configurations
+	I2C_IRQInterruptConfig(IRQ_NO_I2C1_EV ,ENABLE);
+	I2C_IRQInterruptConfig(IRQ_NO_I2C1_ER ,ENABLE);
+
+	I2C_SlaveEnableDisableCallbackEvents(I2C1,ENABLE);
+
 	//Enable the peripheral
 	I2C_PeripheralControl(I2C1,ENABLE);
 
 	//Enable ACK
 	I2C1->CR1 |= (1 << 10);
-	while(1)
+
+	while(1){}
+}
+
+void I2C1_EV_IRQHandler(void)
+{
+	I2C_EV_IRQHandling(&I2C1Handle);
+}
+
+void I2C1_ER_IRQHandler(void)
+{
+	I2C_ER_IRQHandling(&I2C1Handle);
+}
+
+void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv)
+{
+	static uint8_t cnt = 0;
+	if(AppEv == I2C_EV_DATA_REQ)
 	{
-		//Wait for button press
-		while((GPIO_ReadFromInputPin(GPIOC,GPIO_PIN_NO_13)));
-		delay();
-		//Send 0x51 to slave
-		commandcode = 0x51;
-		I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_NO_SR);
+		//Master wants data
+		if(commandCode == 0x51)
+		{
+			//Send length info to master
+			I2C_SlaveSendData(pI2CHandle->pI2Cx,strlen((char *)Tx_buff));
+		}
+		else if(commandCode == 0x52)
+		{
+			//Send the contents of Tx_buff
+			I2C_SlaveSendData(pI2CHandle->pI2Cx,Tx_buff[cnt++]);
+		}
+	}else if(AppEv == I2C_EV_DATA_RCV)
+	{
+		//Data is waiting for slave to read
+		commandCode = I2C_SlaveReceiveData(pI2CHandle->pI2Cx);
 
-		//Read length of data from slave
-		I2C_MasterReceiveData(&I2C1Handle,&length,1,SLAVE_ADDR,I2C_SR);
-
-		//Send 0x52 to slave
-		commandcode = 0x52;
-		I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_SR);
-
-		//Read data from slave
-		I2C_MasterReceiveData(&I2C1Handle,rcv_buff,length,SLAVE_ADDR,I2C_NO_SR);
-
-		rcv_buff[length+1]='\0';
-		printf("Data: %s",rcv_buff);
-
+	}else if(AppEv == I2C_ERROR_AF)
+	{
+		//This happen only during slave txing
+		//Master has sent the NACK. so slave should understand that master doesn't need more data
+		commandCode = 0xff; // reset commandcode variable
+		cnt = 0;
+	}else if(AppEv == I2C_EV_STOP)
+	{
+		//This happens only during slave reception
+		//Master has ended I2C communication with the slave
 	}
 }

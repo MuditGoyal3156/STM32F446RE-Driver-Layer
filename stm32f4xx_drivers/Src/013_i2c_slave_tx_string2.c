@@ -1,19 +1,19 @@
 /*
  *
- *  Created on: Dec 22, 2025
+ *  Created on: Dec 24, 2025
  *      Author: mudit
  */
 
 #include "stm32f446xx.h"
 #include <stdint.h>
 #include <string.h>
-#include <stdio.h>
 
-extern void initialise_monitor_handles();
 
-uint8_t rxCmplt = RESET;
-#define MY_ADDR			0x61U
 #define SLAVE_ADDR  	0x68U
+#define MY_ADDR			SLAVE_ADDR
+
+uint8_t CommandCode;
+uint32_t data_len=0;
 
 //Delay function
 void delay(void)
@@ -23,7 +23,7 @@ void delay(void)
 
 I2C_Handle_t I2C1Handle;
 
-uint8_t rcv_buff[32];
+uint8_t Tx_buf[]= "STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32STM32";//limitation of wire library in arduino is 32 bytes
 
 
 /*
@@ -78,12 +78,8 @@ void GPIO_ButtonInit(void)
 
 int main(void)
 {
+	data_len = strlen((char*)Tx_buf);
 
-	initialise_monitor_handles();
-	printf("Application is running\n");
-
-	uint8_t commandcode;
-	uint8_t length;
 	GPIO_ButtonInit();
 
 	//Configure the pins
@@ -96,45 +92,15 @@ int main(void)
 	I2C_IRQInterruptConfig(IRQ_NO_I2C1_EV ,ENABLE);
 	I2C_IRQInterruptConfig(IRQ_NO_I2C1_ER ,ENABLE);
 
+	I2C_SlaveEnableDisableCallbackEvents(I2C1,ENABLE);
+
 	//Enable the peripheral
 	I2C_PeripheralControl(I2C1,ENABLE);
 
 	//Enable ACK
 	I2C1->CR1 |= (1 << 10);
-	while(1)
-	{
-		//Wait for button press
-		while((GPIO_ReadFromInputPin(GPIOC,GPIO_PIN_NO_13)));
-		delay();//for de-bouncing
 
-		//Send 0x51 to slave
-		commandcode = 0x51;
-		while(I2C_MasterSendDataIT(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_NO_SR) != I2C_READY);
-
-
-		//Read length of data from slave
-		while(I2C_MasterReceiveDataIT(&I2C1Handle,&length,1,SLAVE_ADDR,I2C_SR) != I2C_READY);
-
-		//Send 0x52 to slave
-		commandcode = 0x52;
-		while(I2C_MasterSendDataIT(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_SR) != I2C_READY);
-
-
-		//Read data from slave
-		while( I2C_MasterReceiveDataIT(&I2C1Handle,rcv_buff,length,SLAVE_ADDR,I2C_NO_SR) != I2C_READY);
-		rxCmplt = RESET;
-
-		//Wait till RX completes
-		while(rxCmplt != SET)
-		{
-
-		}
-
-		rcv_buff[length+1]='\0';
-		printf("Data: %s",rcv_buff);
-
-		rxCmplt = RESET;
-	}
+	while(1){}
 }
 
 void I2C1_EV_IRQHandler(void)
@@ -147,25 +113,60 @@ void I2C1_ER_IRQHandler(void)
 	I2C_ER_IRQHandling(&I2C1Handle);
 }
 
-void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv)
+void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle, uint8_t AppEv)
 {
-	if(AppEv == I2C_EV_TX_CMPLT)
-	{
-		printf("Tx is completed\n");
-	}else if(AppEv == I2C_EV_RX_CMPLT)
-	{
-		printf("Rx is completed\n");
-		rxCmplt = SET;
-	}else if(AppEv == I2C_ERROR_AF)
-	{
-		printf("Error : Ack failure\n");
-		//in master ACK failure happens when slave fails to send ack for the byte from the master
-		I2C_CloseSendData(&I2C1Handle);
 
-		//Generate the stop condition
-		I2C_GenerateStopCondition(I2C1);
 
-		//hang in infinite loop
-		while(1);
+	static uint32_t cnt = 0;
+	static uint32_t w_ptr = 0;
+
+
+
+	if(AppEv == I2C_ERROR_AF)
+	{
+		//This will happen during slave transmitting data to master .
+		// slave should understand master needs no more data
+		//slave concludes end of Tx
+
+
+		//if the current active code is 0x52 then dont invalidate
+		if(! (CommandCode == 0x52))
+			CommandCode = 0XFF;
+
+		//reset the cnt variable because its end of transmission
+		cnt = 0;
+
+		//Slave concludes it sent all the bytes when w_ptr reaches data_len
+		if(w_ptr >= (data_len))
+		{
+			w_ptr=0;
+			CommandCode = 0xff;
+		}
+
+	}else if (AppEv == I2C_EV_STOP)
+	{
+		//This will happen during end slave reception
+		//slave concludes end of Rx
+
+		cnt = 0;
+
+	}else if (AppEv == I2C_EV_DATA_REQ)
+	{
+		//Master is requesting for the data . send data
+		if(CommandCode == 0x51)
+		{
+			//Here we are sending 4 bytes of length information
+			I2C_SlaveSendData(I2C1,((data_len >> ((cnt%4) * 8)) & 0xFF));
+		    cnt++;
+		}else if (CommandCode == 0x52)
+		{
+			//sending Tx_buf contents indexed by w_ptr variable
+			I2C_SlaveSendData(I2C1,Tx_buf[w_ptr++]);
+		}
+	}else if (AppEv == I2C_EV_DATA_RCV)
+	{
+		//Master has sent command code, read it
+		 CommandCode = I2C_SlaveReceiveData(I2C1);
+
 	}
 }

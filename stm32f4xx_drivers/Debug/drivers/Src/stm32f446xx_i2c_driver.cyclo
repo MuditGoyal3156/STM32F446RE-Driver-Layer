@@ -17,5 +17,8 @@
 ../drivers/Src/stm32f446xx_i2c_driver.c:460:9:I2C_MasterReceiveDataIT	3
 ../drivers/Src/stm32f446xx_i2c_driver.c:489:6:I2C_CloseSendData	2
 ../drivers/Src/stm32f446xx_i2c_driver.c:505:6:I2C_CloseReceiveData	2
-../drivers/Src/stm32f446xx_i2c_driver.c:523:6:I2C_EV_IRQHandling	31
-../drivers/Src/stm32f446xx_i2c_driver.c:694:6:I2C_ER_IRQHandling	11
+../drivers/Src/stm32f446xx_i2c_driver.c:523:6:I2C_EV_IRQHandling	33
+../drivers/Src/stm32f446xx_i2c_driver.c:711:6:I2C_ER_IRQHandling	11
+../drivers/Src/stm32f446xx_i2c_driver.c:789:6:I2C_SlaveSendData	1
+../drivers/Src/stm32f446xx_i2c_driver.c:794:9:I2C_SlaveReceiveData	1
+../drivers/Src/stm32f446xx_i2c_driver.c:799:6:I2C_SlaveEnableDisableCallbackEvents	2

@@ -630,6 +630,15 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle)
 
 				}
 			}
+		}else
+		{
+			//Slave
+			//Make sure slave is in transmitter mode
+			if(pI2CHandle->pI2Cx->SR2 & (1 << I2C_SR2_TRA))
+			{
+				I2C_ApplicationEventCallback(pI2CHandle,I2C_EV_DATA_REQ);
+			}
+
 		}
 	}
 
@@ -685,6 +694,14 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle)
 					//Notify the application
 					I2C_ApplicationEventCallback(pI2CHandle,I2C_EV_RX_CMPLT);
 				}
+			}
+		}else
+		{
+			//Slave
+			//Make sure slave is in receiver mode
+			if(!(pI2CHandle->pI2Cx->SR2 & (1 << I2C_SR2_TRA)))
+			{
+				I2C_ApplicationEventCallback(pI2CHandle,I2C_EV_DATA_RCV);
 			}
 		}
 	}
@@ -769,3 +786,39 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 
 }
 
+void I2C_SlaveSendData(I2C_RegDef_t *pI2Cx,uint8_t data)
+{
+	pI2Cx->DR = data;
+}
+
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2Cx)
+{
+	return (uint8_t)pI2Cx->DR;
+}
+
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx , uint8_t EnorDi)
+{
+	if(EnorDi == ENABLE)
+	{
+		//Implement the code to enable ITBUFEN Control Bit
+		pI2Cx->CR2 |= ( 1 << I2C_CR2_ITBUFEN);
+
+		//Implement the code to enable ITEVFEN Control Bit
+		pI2Cx->CR2 |= ( 1 << I2C_CR2_ITEVTEN);
+
+		//Implement the code to enable ITERREN Control Bit
+		pI2Cx->CR2 |= ( 1 << I2C_CR2_ITERREN);
+
+
+	}else
+	{
+		//Implement the code to disable ITBUFEN Control Bit
+		pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITBUFEN);
+
+		//Implement the code to disable ITEVFEN Control Bit
+		pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITEVTEN);
+
+		//Implement the code to disable ITERREN Control Bit
+		pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITERREN);
+	}
+}
