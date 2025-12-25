@@ -12,6 +12,10 @@
 #define __vo		volatile
 
 /*
+ * Base Address of SysTick
+ */
+#define SYSTICK_BASE_ADDR	((__vo uint32_t*)0xE000E010)
+/*
  * NVIC ISERx register Addresses
  */
 #define NVIC_ISER0		( (__vo uint32_t*)0xE000E100 )
@@ -219,6 +223,16 @@ typedef struct
 
 }USART_RegDef_t;
 
+
+typedef struct
+{
+	volatile uint32_t CSR;
+	volatile uint32_t RVR;
+	volatile uint32_t CVR;
+	volatile uint32_t CALIB;
+}SYSTICK_RegDef_t;
+
+
 /*
  * peripheral definition ( Peripheral base addresses typecasted to xxx_RegDef_t)
 */
@@ -253,6 +267,8 @@ typedef struct
 #define UART4       ((USART_RegDef_t *)UART4_BASEADDR)
 #define UART5       ((USART_RegDef_t *)UART5_BASEADDR)
 #define USART6      ((USART_RegDef_t *)USART6_BASEADDR)
+
+#define SysTick      ((SYSTICK_RegDef_t *)SYSTICK_BASE_ADDR)
 /*
  * Clock Enable Macros for GPIOx peripherals
  */
@@ -578,7 +594,13 @@ typedef struct
 #define USART_CR3_CTSE			9
 #define USART_CR3_CTSIE			10
 #define USART_CR3_ONEBIT		11
-
+/*
+ * Bit position definition macros for SYST_CSR
+ */
+#define CTRL_ENABLE        (1U << 0)
+#define CTRL_TICKINT       (1U << 1)
+#define CTRL_CLKSRC        (1U << 2)
+#define CTRL_COUNTFLAG     (1U << 16)
 
 //some generic macros
 #define ENABLE            1
@@ -594,4 +616,5 @@ typedef struct
 #include "stm32f446xx_uart_driver.h"
 #include "RCC_Peripheral.h"
 #include "Print_on_Serial_terminal.h"
+#include "Systick.h"
 #endif /* INC_STM32F446XX_H_ */

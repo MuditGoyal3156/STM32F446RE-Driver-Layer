@@ -1,2 +1,0 @@
-../drivers/Src/RCC_Peripheral.c:8:10:RCC_GetPCLK1Value	5
-../drivers/Src/RCC_Peripheral.c:53:10:RCC_GetPCLK2Value	4
