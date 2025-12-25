@@ -55,6 +55,12 @@ Transmit and receive support
 Polling and interrupt modes
 
 Debug output support over serial terminal
+
+### 🔹 **SYSTICK**
+
+Generate 1Ms delay
+
+Interrupt and Polling modes
 ____________________________________________________________________________________________________________________________________________________________________
 ## 🛠 **Development Environment**
 
