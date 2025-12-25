@@ -36,7 +36,7 @@ Multi-byte TX / RX support
 
 ### 🔹 **I2C**
 
-Master mode communication
+Master and Slave mode communication
 
 Start / Stop condition handling
 
@@ -46,7 +46,7 @@ ACK / NACK management
 
 Interrupt-based flow
 
-### 🔹 **UART (USART)**
+### 🔹 **UART**
 
 Baud rate configuration
 
