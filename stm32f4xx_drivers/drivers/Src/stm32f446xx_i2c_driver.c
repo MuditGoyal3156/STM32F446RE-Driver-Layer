@@ -6,53 +6,9 @@
  */
 #include "stm32f446xx.h"
 
-uint16_t AHB_PreScalar[8]={2,4,8,16,64,128,256,512};
-uint8_t APB1_PreScalar[4]={2,4,8,16};
-
-uint32_t RCC_GetPLLOutputClock()
-{
-	return 0;
-}
 
 
 
-
-uint32_t RCC_GetPCLK1Value(void)
-{
-	uint32_t pclk1,SystemClk;
-	uint8_t clksource,temp,ahbp,apb1p;
-	clksource = ((RCC->CFGR >> 2) & 0x3);
-	if(clksource == 0)
-	{
-		SystemClk = 16000000;
-	}else if(clksource == 1)
-	{
-		SystemClk = 8000000;
-	}if(clksource == 2)
-	{
-		SystemClk = RCC_GetPLLOutputClock();
-	}
-	temp = ((RCC->CFGR >> 4) & 0xF);
-	if(temp < 8)
-	{
-		ahbp =1;
-	}else
-	{
-		ahbp = AHB_PreScalar[temp-8];
-	}
-
-	temp = ((RCC->CFGR >> 10) & 0x7);
-	if(temp < 4)
-	{
-		apb1p =1;
-	}else
-	{
-		apb1p = APB1_PreScalar[temp-4];
-	}
-
-	pclk1 = (SystemClk/ahbp)/apb1p;
-	return pclk1;
-}
 
 void I2C_Init(I2C_Handle_t *pI2CHandle)
 {

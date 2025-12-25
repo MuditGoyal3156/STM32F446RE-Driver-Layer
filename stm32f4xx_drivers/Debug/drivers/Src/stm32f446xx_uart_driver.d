@@ -1,5 +1,5 @@
-drivers/Src/stm32f446xx_i2c_driver.o: \
- ../drivers/Src/stm32f446xx_i2c_driver.c \
+drivers/Src/stm32f446xx_uart_driver.o: \
+ ../drivers/Src/stm32f446xx_uart_driver.c \
  C:/Embedded_programming/Codes/stm32f4xx_drivers/drivers/Inc/stm32f446xx.h \
  C:/Embedded_programming/Codes/stm32f4xx_drivers/drivers/Inc/stm32f446xx_gpio_driver.h \
  C:/Embedded_programming/Codes/stm32f4xx_drivers/drivers/Inc/stm32f446xx.h \
